@@ -1,0 +1,61 @@
+# NeuraDNS - LLM Context File
+
+## Project Summary
+NeuraDNS is an AI-powered decentralized Domain Name System built on Solana blockchain. It combines AI validation (Groq LLM via n8n) with blockchain immutability to prevent DNS attacks like typosquatting and homograph attacks.
+
+## Quick Facts
+- **Purpose**: Secure, fraud-resistant DNS on blockchain
+- **Blockchain**: Solana (Devnet)
+- **AI Engine**: Groq LLM via n8n workflow
+- **Program ID**: H7azh1pVd3uySy7z4JRmQL2HpF2D9673Y9RP4yXZWfFM
+- **Live Demo**: http://82.112.235.26:8765
+- **Hackathon**: QIE Blockchain Hackathon 2025
+
+## Architecture
+```
+Browser → Flask UI (:8765) → Node.js API (:3007) → AI Validation (n8n/Groq)
+                                                 → Solana Blockchain
+```
+
+## Core Functionality
+1. **Validate Domain**: Check availability + AI fraud detection
+2. **Register Domain**: Store domain→IP on blockchain after AI approval
+3. **Resolve Domain**: Query blockchain for registered domains
+
+## AI Validation Rules
+- BLOCKS: Well-known domains (google.com), homograph attacks (rnicrosoft.com), private IPs
+- ALLOWS: Blockchain-related names, unique long names (15+ chars)
+
+## Key Files
+- `blockchain_dns_register/production-api.ts` - Main API server
+- `blockchain_dns_register/app.py` - Flask UI server
+- `contracts/neura_dns.rs` - Solana smart contract
+- `public/index.html` - Frontend UI
+
+## API Endpoints
+- POST /api/validate - Check domain with AI
+- POST /api/register - Register on blockchain
+- GET /api/resolve?domain=X - Lookup domain
+
+## Tech Stack
+- Node.js + Express + TypeScript (API)
+- Python Flask (UI Server)
+- Solana + Anchor Framework (Blockchain)
+- Groq LLM + n8n (AI Validation)
+- HTML/CSS/JS (Frontend)
+
+## Problem Solved
+Traditional DNS is vulnerable to:
+1. Homograph attacks (rnicrosoft.com looks like microsoft.com)
+2. Typosquatting (gooogle.com)
+3. BGP hijacking (mutable records)
+4. Centralized failures (Cloudflare outage 2024)
+
+NeuraDNS solves these with AI detection + blockchain immutability.
+
+## Competition
+- vs Traditional DNS (Cloudflare, Google): Adds AI + decentralization
+- vs Blockchain DNS (ENS, Handshake): Adds AI fraud detection layer
+
+## Unique Value
+Only blockchain DNS with AI-powered fraud detection.
